@@ -27,3 +27,22 @@ python ./3_train_bart/train.py --config ./configs/configs.yaml
 ```python
 python ./4_infer_bart/inference.py --config ./configs/configs.yaml
 ```
+
+
+### To cite
+```
+@inproceedings{ijcai2024p872,
+  title     = {XAI-Lyricist: Improving the Singability of AI-Generated Lyrics with Prosody Explanations},
+  author    = {Liang, Qihao and Ma, Xichu and Doshi-Velez, Finale and Lim, Brian and Wang, Ye},
+  booktitle = {Proceedings of the Thirty-Third International Joint Conference on
+               Artificial Intelligence, {IJCAI-24}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Kate Larson},
+  pages     = {7877--7885},
+  year      = {2024},
+  month     = {8},
+  note      = {Human-Centred AI},
+  doi       = {10.24963/ijcai.2024/872},
+  url       = {https://doi.org/10.24963/ijcai.2024/872},
+}
+```
