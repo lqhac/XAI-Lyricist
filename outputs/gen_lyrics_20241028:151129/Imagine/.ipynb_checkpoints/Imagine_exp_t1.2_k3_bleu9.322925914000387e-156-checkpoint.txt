@@ -1,0 +1,130 @@
+
+>> Mismatched Line Number 
+
+Line_0: 
+Skeleton_I:	<s> <title> Imagine <syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Lyric_GT:	imagine there's no heaven
+Lyric_Gen:	imagine how it felt up
+GT:	[ɪ]	['mæ]	[ʤən]	[ðɛrz]	['noʊ]	['hɛ]	[vən]	
+GE:	[ɪ]	['mæ]	[ʤən]	[haʊ]	['ɪt]	['fɛlt]	[əp]
+
+Line_1: 
+Skeleton_I:	<syllable_6> <template> <weak> <strong> <weak> <weak> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <weak> <strong> <weak> <weak> <weak> <strong>
+Lyric_GT:	it's easy if you try
+Lyric_Gen:	imagine how to make
+GT:	[ɪts]	['iː]	[ziː]	[ɪf]	[juː]	['traɪ]	
+GE:	[ɪ]	['mæ]	[ʤən]	[haʊ]	[tuː]	['meɪk]
+
+Line_2: 
+Skeleton_I:	<syllable_5> <template> <strong> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_5> <template> <strong> <strong> <weak> <strong> <weak>
+Lyric_GT:	no hell below us
+Lyric_Gen:	i couldn't live up
+GT:	['noʊ]	['hɛl]	[bɪ]	['loʊ]	[əs]	
+GE:	['aɪ]	['kʊ]	[dənt]	['laɪv]	[əp]
+
+Line_3: 
+Skeleton_I:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <weak> <strong>
+Lyric_GT:	above us only sky
+Lyric_Gen:	imagine how hard you try
+GT:	[ə]	['bʌv]	[əs]	['oʊn]	[liː]	['skaɪ]	
+GE:	[ɪ]	['mæ]	[ʤən]	[haʊ]	['hɑrd]	[juː]	['traɪ]
+
+Line_4: 
+Skeleton_I:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Lyric_GT:	imagine all the people
+Lyric_Gen:	imagine all my dreams up
+GT:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[ðə]	['piː]	[pəl]	
+GE:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[maɪ]	['driːmz]	[əp]
+
+Line_5: 
+Skeleton_I:	<syllable_7> <template> <strong> <weak> <weak> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <weak> <weak> <strong> <weak>
+Lyric_GT:	living for today you oh
+Lyric_Gen:	imagine you imagine
+GT:	['lɪ]	[vɪŋ]	[fɔːr]	[tʌ]	['deɪ]	[juː]	['oʊ]	
+GE:	[ɪ]	['mæ]	[ʤən]	[juː]	[ɪ]	['mæ]	[ʤən]
+
+Line_6: 
+Skeleton_I:	<syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Skeleton_O:	<syllable_8> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak> <weak>
+Lyric_GT:	imagine there's no countries
+Lyric_Gen:	imagine how it felt up to
+GT:	[ɪ]	['mæ]	[ʤən]	[ðɛrz]	['noʊ]	['kən]	[triːz]	
+GE:	[ɪ]	['mæ]	[ʤən]	[haʊ]	['ɪt]	['fɛlt]	[əp]	[tuː]
+
+Line_7: 
+Skeleton_I:	<syllable_6> <template> <strong> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <strong> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	it isn't hard to do
+Lyric_Gen:	i couldn't make you feel
+GT:	['ɪt]	['ɪ]	[zənt]	['hɑrd]	[tuː]	['duː]	
+GE:	['aɪ]	['kʊ]	[dənt]	['meɪk]	[juː]	['fiːl]
+
+Line_8: 
+Skeleton_I:	<syllable_7> <template> <strong> <weak> <weak> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_8> <template> <weak> <strong> <weak> <weak> <strong> <weak> <strong> <weak>
+Lyric_GT:	nothing to kill or die for
+Lyric_Gen:	imagine you never loved me
+GT:	['nʌ]	[θɪŋ]	[tuː]	['kɪl]	[ɔːr]	['daɪ]	[fɔːr]	
+GE:	[ɪ]	['mæ]	[ʤən]	[juː]	['nɛ]	[vɛː]	['lʌvd]	[miː]
+
+Line_9: 
+Skeleton_I:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	and no religion too
+Lyric_Gen:	imagine all my dreams
+GT:	[ænd]	['noʊ]	[rɪ]	['lɪ]	[ʤən]	['tuː]	
+GE:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[maɪ]	['driːmz]
+
+Line_10: 
+Skeleton_I:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Lyric_GT:	imagine all the people
+Lyric_Gen:	imagine all my dreams up
+GT:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[ðə]	['piː]	[pəl]	
+GE:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[maɪ]	['driːmz]	[əp]
+
+Line_11: 
+Skeleton_I:	<syllable_7> <template> <strong> <weak> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_8> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	living life in peace you oh
+Lyric_Gen:	imagine all my dreams to come
+GT:	['lɪ]	[vɪŋ]	['laɪf]	[ɪn]	['piːs]	[juː]	['oʊ]	
+GE:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[maɪ]	['driːmz]	[tuː]	['kəm]
+
+Line_12: 
+Skeleton_I:	<syllable_7> <template> <weak> <weak> <strong> <weak> <weak> <strong> <weak>
+Skeleton_O:	<syllable_8> <template> <weak> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Lyric_GT:	you may say i'm a dreamer
+Lyric_Gen:	to imagine how it felt to
+GT:	[juː]	[meɪ]	['seɪ]	[aɪm]	[eɪ]	['driː]	[mɛː]	
+GE:	[tuː]	[ɪ]	['mæ]	[ʤən]	[haʊ]	['ɪt]	['fɛlt]	[tuː]
+
+Line_13: 
+Skeleton_I:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Skeleton_O:	<syllable_12> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak> <strong> <strong> <substrong> <weak> <strong>
+Lyric_GT:	but i'm not the only one
+Lyric_Gen:	and imagine that you and i would understand
+GT:	[bət]	[aɪm]	['nɑt]	[ðə]	['oʊn]	[liː]	[wʌn]	
+GE:	[ænd]	[ɪ]	['mæ]	[ʤən]	['ðæt]	[juː]	[ænd]	['aɪ]	['wʊd]	[`ən]	[dɛː]	['stænd]
+
+Line_14: 
+Skeleton_I:	<syllable_7> <template> <strong> <strong> <strong> <substrong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Lyric_GT:	i hope someday you'll join us
+Lyric_Gen:	how this feels so beautiful
+GT:	['aɪ]	['hoʊp]	['səm]	[`deɪ]	[juːl]	['ʤɔɪn]	[əs]	
+GE:	[haʊ]	[ðɪs]	['fiːlz]	[soʊ]	['bjuː]	[tʌ]	[fəl]
+
+Line_15: 
+Skeleton_I:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Skeleton_O:	<syllable_0> <template> 
+Lyric_GT:	and the world will be as one
+Lyric_Gen:	
+GT:	[ænd]	[ðə]	['wɛːld]	[wɪl]	['biː]	[æz]	[wʌn]	
+GE:	

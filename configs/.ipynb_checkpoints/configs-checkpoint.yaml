@@ -1,107 +1,43 @@
 ## data directories
-# exp_date: '20230630:154005'  ## bart with prompt in encoder, validation loss ~= 1.651
-# exp_date: '20230717:153543'  ## bart with prompt in encoder, without syllable plan, validation loss ~= 1.56
-# exp_date: '20230721:211055'  ## bart trained on genre cls ds, val loss ~= 1.674
-# exp_date: '20230725:160038' ## bart trained on full lyric corpora, val loss ~= 2.55
-# exp_date: '20230727:043349'  ## val loss ~= 2.533
-# exp_date: '20230731:004600' ## val loss ~= 2.45
-# exp_date: '20230801:174249' ## val loss ~= 1.03
-# exp_date: '20230802:152418' ## val loss ~= 0.974
-# exp_date: '20230803:000029' ## val loss ~= 0.666
-# exp_date: '20230803:013018' ## val loss ~= 0.628
-# exp_date: '20230803:124545' ## val loss ~= 0.682
-# exp_date: '20230803:213719' ## val loss ~= 0.6143
-# exp_date: '20230803:235508'  ## val loss ~= 0.64
-# exp_date: '20230804:014754' ## val loss ~= 0.728
-# exp_date: '20230804:164655' ## with <sep> token, val loss ~= 0.643
-# exp_date: '20230804:194746' ## fewer keywords, val loss ~= 0.679
-# exp_date: '20230804:205620' ## on genre cls data, val loss ~= 0.781
-# exp_date: '20230813:002328'
-exp_date: '20230814:025717' ## val loss ~= 0.87
-
-# exp_date: '20230805:022140'
-# exp_date: '20230805:153041'
-# exp_date: '20230807:162825' ## val loss ~= 1.169
-
-# exp_date: '20230813:144846'
-
+exp_date: '20230814:134500'
 prompt: True
 cond: True
+output_lyrics_dir: './outputs'
 
 enc_tknzr_dir: '/data1/qihao/XAI-Lyricist/bart/bart_tokenizer'
-dec_tknzr_dir: '/data1/qihao/XAI-Lyricist/bart/bart_tokenizer'
 custom_model_dir: '/data1/qihao/XAI-Lyricist/bart/bart_custom_model'
-
-# enc_tknzr_dir: '/data1/qihao/XAI-Lyricist/bart/bart_tokenizer_sep'
-# dec_tknzr_dir: '/data1/qihao/XAI-Lyricist/bart/bart_tokenizer_sep'
-# custom_model_dir: '/data1/qihao/XAI-Lyricist/bart/bart_custom_model_2048'
-# custom_model_dir: '/data1/qihao/XAI-Lyricist/bart/bart_custom_model_sep'
-# custom_model_dir: '/data1/qihao/XAI-Lyricist/bart/bart_large_custom_model'
-# custom_model_dir: 'facebook/bart-base'
-# dec_tknzr_dir: 'facebook/bart-base'
+dec_tknzr_dir: 'facebook/bart-base'
 model_dir: 'facebook/bart-base'
 
-## Kaggle79 Dataset (Sentence level)
-# dataset_dir: '/data1/qihao/XAI-Lyricist/kaggle79_sentence'
-# binary_data_dir: '/data1/qihao/XAI-Lyricist/binary'
-# word_data_dir: '/data1/qihao/XAI-Lyricist/conbart/words_prompt'
-# tensorboard: '/data1/qihao/XAI-Lyricist/tensorboards/bart'
-# checkpoint_dir: '/data1/qihao/XAI-Lyricist/checkpoints/bart'
-
 ## Genre Classification Dataset
-# dataset_dir: '/data1/qihao/XAI-Lyricist/genre_cls_dataset'
-dataset_dir: '/data1/qihao/XAI-Lyricist/kaggle79_whole'
-binary_data_dir: '/data1/qihao/XAI-Lyricist/binary'
-word_data_dir: '/data1/qihao/XAI-Lyricist/conbart/genre_cls_dataset'
-# word_data_dir: '/data1/qihao/XAI-Lyricist/conbart/genre_cls_dataset_comma'
-# word_data_dir: '/data1/qihao/XAI-Lyricist/conbart/kaggle_79_whole'
-# word_data_dir: '/data1/qihao/XAI-Lyricist/conbart/kaggle_79_whole_full'
-# word_data_dir: '/data1/qihao/XAI-Lyricist/conbart/kaggle_79_whole_full_sep'
+dataset_dir: './dataset/custom_sample'
+binary_data_dir: './binary'  ## dictionaries
+word_data_dir: './dataset/custom_sample/binary'
 tensorboard: '/data1/qihao/XAI-Lyricist/tensorboards/bart'
 checkpoint_dir: '/data1/qihao/XAI-Lyricist/checkpoints/bart'
-
-# data_dir_train: '/data1/qihao/XAI-Lyricist/dataset/train'
-# data_dir_valid: '/data1/qihao/XAI-Lyricist/dataset/valid'
-# data_dir_test: '/data1/qihao/XAI-Lyricist/dataset/test'
-
-## small dataset for test
-# data_dir_train: '/data1/qihao/XAI-Lyricist/dataset_small/train'
-# data_dir_valid: '/data1/qihao/XAI-Lyricist/dataset_small/valid'
-# data_dir_test: '/data1/qihao/XAI-Lyricist/dataset_small/test'
 
 midi_dir: '/data1/qihao/XAI-Lyricist/MIDI-Lyric'
 parse: 'Syllable_Parsing'
 
-# pretrain: '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230803:013018_lr5e-05/bestM2LCkpt.pt'
-# pretrain: ''
-# pretrain: '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230717:153543_lr5e-05/bestM2LCkpt.pt'
-# pretrain: '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230804:164655_lr5e-05/bestM2LCkpt.pt'
-# pretrain: '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230803:213719_lr5e-05/bestM2LCkpt.pt'
-pretrain: '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230814:025717_lr5e-05/bestM2LCkpt.pt'
+pretrain: '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230803:013018_lr5e-05/bestM2LCkpt.pt'
 
 total_epoch: 1000
 
-## model configuration
 sentence_maxlen: 1024
 hidden_size: 768
 # hidden_size: 1024  ## for bart large
-drop_prob: 0.3  ## dropout probability for embedding layer
-batch_size: 3
+drop_prob: 0.2  ## dropout probability for embedding layer
+batch_size: 4
 d_model: 512
 max_len: 1024
 ffn_hidden: 2048
 n_head: 8
 n_layers: 6
-warmup: 3000
+warmup: 2500
 
 lambda_rem: 0.0
 lambda_word: 1.0
 
-# optimizer
-## lr: 1.0e-5
-# lr: 5.0e-5
-# lr: 3.5e-6 # start from 2.0
-# lr: 3.0e-05
 lr: 5.0e-5
 optimizer_adam_beta1: 0.9
 optimizer_adam_beta2: 0.98
