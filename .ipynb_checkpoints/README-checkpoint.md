@@ -3,6 +3,11 @@ This is the official repository for the paper "XAI-Lyricist: Improving the Singa
 
 ## Usage
 
+0. set python
+```shell
+export PYTHONPATH=.
+```
+
 1. build dictiory
 ```python
 python ./0_build_dict/build_dictionary.py -config ./configs/configs.yaml
@@ -26,6 +31,7 @@ python ./3_train_bart/train.py -config ./configs/configs.yaml
 5. inference
 ```python
 python ./4_infer_bart/inference.py -config ./configs/configs.yaml
+python ./4_infer_bart/inference_parody.py -config ./configs/configs.yaml
 ```
 
 

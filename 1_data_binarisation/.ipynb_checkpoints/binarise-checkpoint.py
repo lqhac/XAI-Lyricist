@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import multiprocessing as mp
 from utils.hparams import hparams, set_hparams
 from utils.indexed_datasets import IndexedDatasetBuilder
+from utils.prosody_utils import getProsody
 import cv2 as cv
 from sentence_splitter import SentenceSplitter
 from transformers import BartTokenizer
@@ -63,7 +64,7 @@ def str2items(lyric):
     # assert len(syllable_items)==len(word_items)
     
     return word_items, syllable_items
-    
+                
 
 class Event(object):
     def __init__(self, name, value, bar=0, pos=0, pitch=0, dur=0, vel=0): # name_value : Bar_0, Postion_30, Note_64...
@@ -166,6 +167,198 @@ def replace_single_quotes(text):
     return text
 
 
+def mid2items(midi_pth, title: str, keywords: list, event2word_dict: dict, lyric2word_dict: dict):
+    src_words, tgt_words = [], []
+    midi = miditoolkit.MidiFile(midi_pth)
+    title_str = title_str.replace('.', '')
+
+    prefix = f"<title>{title_str}"
+    encoded_prefix = src_tknzr.encode(prefix)
+
+    ## ----- #src prefix words# ------ ##
+    for ep in encoded_prefix:
+        if src_tknzr.decode(ep).strip() == '</s>': ## skip the eos
+            continue
+        src_words.append({
+            'sentence': 0,
+            'meter': ep,
+            'length': 0,
+            'remainder': 0,
+        })
+    ## ----- #tgt prefix words# ------ ##
+    tgt_words = [{'sentence': 0,
+                  'word': tgt_tknzr.encode('<s>')[1],
+                  'syllable': 0,
+                  'remainder': 0,
+                 }]
+
+    prosody_list = getProsody(midi_pth)
+    assert len(prosody_list) == len(midi.instruments[0].notes)
+    
+    ## group midi by phrase
+    group_by_phrase = {}
+    start = -1
+    for idx in range(len(midi.markers)):
+        end = midi.markers[idx].time
+        if idx not in group_by_phrase.keys():
+            group_by_phrase[idx] = []
+        for inst in midi.instruments:
+            for nid, note in enumerate(inst.notes):
+                if note.start > start and note.start <= end:
+                    group_by_phrase[idx].append((nid, note, prosody_list[nid]))
+        start = midi.markers[idx].time
+
+    assert len(keywords) == len(group_by_phrase)
+
+    for line_id, line in group_by_phrase.items():
+        keyword = keywords[line_id] ## keyword of this line
+        prompt = f"<keywords>{keyword_str.strip()}"
+        line_syllable_num = len(line)
+        # for note in line:
+        src_words.append({
+            'sentence': 0,
+            'meter': src_tknzr.encode(f"<syllable_{line_syllable_num}>")[1],
+            'length': 0,
+            'remainder': 0,
+        })
+        src_words.append({
+            'sentence': 0,
+            'meter': src_tknzr.encode(f"<template>")[1],
+            'length': 0,
+            'remainder': 0,
+        })
+        ### src template words
+        rem_s = line_syllable_num
+        for note in line: ## each note is [nid, midinote, prosody]
+            rem_s -= 1  ## decrement
+            ## strength symbol
+            mtype, length = note[2][0], note[2][1]
+            src_words.append({
+                'sentence': event2word_dict['Phrase'][f"Phrase_{line_id}"],
+                'meter': src_tknzr.encode(mtype)[1],
+                'length': event2word_dict['Length'][length],
+                'remainder': lyric2word_dict['Remainder'][f"Remain_{rem_s}"],
+            })
+        assert rem_s == 0
+
+    ## 
+    for data_sample in data_samples: ## traverse all sentences
+        
+        assert len(text.lines()) == 1
+        assert len(keywords) == len(group_by_phrase)
+
+        for line_id, line in group_by_phrase.items():
+            # print(f"line_{line_id}: {line}")
+            # words = line.words()
+            # line_syllables = line.syllables()
+            # line_syllable_num = len(line_syllables)
+            if len(line) > 40:
+                # print("Exceed max syllable per line")
+                return [], []
+
+            # prompt = f"<syllable_{line_syllable_num}> <title> {title_str.strip()} <keywords> {keyword_str.strip()}"
+            prompt = f"<keywords>{keyword_str.strip()}"
+            encoded_prompt = src_tknzr.encode(prompt)
+            src_words.append({
+                'sentence': 0,
+                'meter': src_tknzr.encode(f"<syllable_{line_syllable_num}>")[1],
+                'length': 0,
+                'remainder': 0,
+            })
+            src_words.append({
+                'sentence': 0,
+                'meter': src_tknzr.encode(f"<template>")[1],
+                'length': 0,
+                'remainder': 0,
+            })
+
+            ### src template words
+            rem_s = line_syllable_num
+            for s in line_syllables:
+                rem_s -= 1  ## decrement
+                ## is accented:
+                if "'" in str(s): ## strong
+                    mtype = "<strong>"
+                elif "`" in str(s):
+                    mtype = "<substrong>"
+                else:
+                    mtype = "<weak>"
+                length = "Long" if "ː" in str(s) else "Short"
+                src_words.append({
+                    'sentence': event2word_dict['Phrase'][f"Phrase_{line_id}"],
+                    'meter': src_tknzr.encode(mtype)[1],
+                    'length': event2word_dict['Length'][length],
+                    'remainder': lyric2word_dict['Remainder'][f"Remain_{rem_s}"],
+                })
+            assert rem_s == 0
+
+            ### process prompt words:
+            for ew in encoded_prompt:
+                if ew in src_tknzr.encode('<s>') or ew in src_tknzr.encode('</s>'):
+                    continue
+                src_words.append({
+                    'sentence': 0,
+                    'meter': ew,
+                    'length': 0,
+                    'remainder': 0,
+                })
+            src_words.append({
+                'sentence': 0,
+                'meter': src_tknzr.encode('.')[1],
+                'length': 0,
+                'remainder': 0,
+            })
+            
+            ### --- target words ---
+            for idx, word in enumerate(words):                
+                if "?" in word.token:
+                    # print(f"None detectable token {word.token}")
+                    return [], []
+                encoded_word = tgt_tknzr.encode(f" {word.token}")
+                # assert len(encoded_word) == 1
+                syllables = word.syllables()
+                num_syllables = len(syllables)
+                rem = line_syllable_num - num_syllables
+                ### tgt words
+                for ew in encoded_word:
+                    if ew in tgt_tknzr.encode('<s>') or ew in tgt_tknzr.encode('</s>'):
+                        continue
+                    if num_syllables == 0:
+                        tgt_words.append({'sentence': event2word_dict['Phrase'][f"Phrase_{line_id}"],
+                                           'word': ew,
+                                           'syllable': 0,
+                                           'remainder': lyric2word_dict['Remainder'][f"Remain_{rem}"]})
+                    else:
+                        tgt_words.append({'sentence': event2word_dict['Phrase'][f"Phrase_{line_id}"],
+                                           'word': ew,
+                                           'syllable': lyric2word_dict['Syllable'][f"Syllable_{num_syllables}"],
+                                           'remainder': lyric2word_dict['Remainder'][f"Remain_{rem}"]})
+            ## sep sentence with \n
+            tgt_words.append({
+                'sentence': 0,
+                'word': tgt_tknzr.encode('.')[1],
+                'syllable': 0,
+                'remainder': 0,
+            })
+    
+    ## ----- end of target sequence -----
+    src_words.append({
+        'sentence': 0,
+        'meter': src_tknzr.encode('</s>')[-1],
+        'length': 0,
+        'remainder': 0,
+    })
+    
+    tgt_words.append({
+        'sentence': 0,
+        'word': tgt_tknzr.encode('</s>')[-1],
+        'syllable': 0,
+        'remainder': 0,
+    })
+    
+    return src_words, tgt_words
+    
+
 def lyric2words (lyrics, event2word_dict, lyric2word_dict):
     # import re
     # pattern = r"\([^()]*\)"
@@ -196,7 +389,9 @@ def lyric2words (lyrics, event2word_dict, lyric2word_dict):
                   'syllable': 0,
                   'remainder': 0,
                  }]
-    
+
+    for line_id, line in enumerate(text.lines()):
+        
     for data_sample in data_samples: ## traverse all sentences
         """
         if len(src_words) > 1024 or len(tgt_words) > 1024:
@@ -329,11 +524,6 @@ def lyric2words (lyrics, event2word_dict, lyric2word_dict):
         'syllable': 0,
         'remainder': 0,
     })
-    
-    """
-    if len(src_words) > 1024 or len(tgt_words) > 1024:
-        return [], []
-    """
     
     return src_words, tgt_words
 

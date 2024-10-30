@@ -8,6 +8,7 @@ from models.dataloader import *
 import datetime, traceback
 from utils.tools.get_time import get_time
 import statistics
+from utils.prosody_utils import getProsody
 from nltk.translate.bleu_score import sentence_bleu
 from models.conbart import Bart
 from transformers import BartTokenizer
@@ -47,6 +48,111 @@ def load_model(checkpoint_path, device):
     return model
 
 
+def mid2words(midi_pth, title: str, keywords: list, event2word_dict: dict, lyric2word_dict: dict):
+    src_words, tgt_words = [], []
+    midi = miditoolkit.MidiFile(midi_pth)
+    title_str = title.replace('.', '')
+
+    prefix = f"<title>{title_str}"
+    encoded_prefix = src_tknzr.encode(prefix)
+
+    ## ----- #src prefix words# ------ ##
+    for ep in encoded_prefix:
+        if src_tknzr.decode(ep).strip() == '</s>': ## skip the eos
+            continue
+        src_words.append({
+            'sentence': 0,
+            'meter': ep,
+            'length': 0,
+            'remainder': 0,
+        })
+    ## ----- #tgt prefix words# ------ ##
+    tgt_words = [{'sentence': 0,
+                  'word': tgt_tknzr.encode('<s>')[1],
+                  'syllable': 0,
+                  'remainder': 0,
+                 }]
+
+    prosody_list = getProsody(midi_pth)
+    assert len(prosody_list) == len(midi.instruments[0].notes)
+
+    print(prosody_list)
+    
+    ## group midi by phrase
+    group_by_phrase = {}
+    start = -1
+    for idx in range(len(midi.markers)):
+        end = midi.markers[idx].time
+        if idx not in group_by_phrase.keys():
+            group_by_phrase[idx] = []
+        for inst in midi.instruments:
+            for nid, note in enumerate(inst.notes):
+                if note.start > start and note.start <= end:
+                    group_by_phrase[idx].append((nid, note, prosody_list[nid]))
+        start = midi.markers[idx].time
+
+    assert len(keywords) == len(group_by_phrase)
+    # print(group_by_phrase)
+
+    for line_id, line in group_by_phrase.items():
+        keyword = keywords[line_id] ## keyword of this line
+        prompt = f"<keywords>{keyword.strip()}"
+        encoded_prompt = src_tknzr.encode(prompt)
+        line_syllable_num = len(line)
+        # for note in line:
+        src_words.append({
+            'sentence': 0,
+            'meter': src_tknzr.encode(f"<syllable_{line_syllable_num}>")[1],
+            'length': 0,
+            'remainder': 0,
+        })
+        src_words.append({
+            'sentence': 0,
+            'meter': src_tknzr.encode(f"<template>")[1],
+            'length': 0,
+            'remainder': 0,
+        })
+        ### src template words
+        rem_s = line_syllable_num
+        for note in line: ## each note is [nid, midinote, prosody]
+            rem_s -= 1  ## decrement
+            ## strength symbol
+            mtype, length = note[2][0], note[2][1]
+            src_words.append({
+                'sentence': event2word_dict['Phrase'][f"Phrase_{line_id}"],
+                'meter': src_tknzr.encode(mtype)[1],
+                'length': event2word_dict['Length'][length],
+                'remainder': lyric2word_dict['Remainder'][f"Remain_{rem_s}"],
+            })
+        assert rem_s == 0
+        """
+        for ew in encoded_prompt:
+            if ew in src_tknzr.encode('<s>') or ew in src_tknzr.encode('</s>'):
+                continue
+            src_words.append({
+                'sentence': 0,
+                'meter': ew,
+                'length': 0,
+                'remainder': 0,
+            })
+        """
+        src_words.append({
+            'sentence': 0,
+            'meter': src_tknzr.encode('.')[1],
+            'length': 0,
+            'remainder': 0,
+        })
+    ## eos
+    src_words.append({
+        'sentence': 0,
+        'meter': src_tknzr.encode('</s>')[-1],
+        'length': 0,
+        'remainder': 0,
+    })
+
+    return src_words, tgt_words
+
+
 if __name__ == '__main__':
     set_seed()
     set_hparams()
@@ -58,7 +164,7 @@ if __name__ == '__main__':
     # User Interface Parameter
     # ---------------------------------------------------------------
     batch_size = 1
-    temperature, topk = 1.3, 3
+    temperature, topk = 1.2, 3
     prompt_size = 10
     inference_max_tokens = 1024
     
@@ -69,10 +175,12 @@ if __name__ == '__main__':
     tgt_tknzr = BartTokenizer.from_pretrained(hparams['dec_tknzr_dir'])
 
     ckpt_path = os.path.join('./checkpoints', 'bestM2LCkpt.pt')
+    # ckpt_path = '/home/qihao/bestM2LCkpt.pt'
+    # ckpt_path = '/data1/qihao/XAI-Lyricist/checkpoints/bart/BartForConditionalGeneration_20230814:025717_lr5e-05/bestM2LCkpt.pt'
 
     # load dictionary
     event2word_dict, word2event_dict, lyric2word_dict, word2lyric_dict = pickle.load(open(f"{hparams['binary_data_dir']}/m2l_dict.pkl", 'rb'))
-    
+
     test_dataset = M2LDataset('valid', event2word_dict, lyric2word_dict, hparams, shuffle=True, is_pretrain=True)
     test_dataloader = build_dataloader(dataset=test_dataset, shuffle=False, batch_size=batch_size)
     print(f"Test Datalodaer = {len(test_dataloader)} Songs")
@@ -89,9 +197,49 @@ if __name__ == '__main__':
     output_lyrics_dir = hparams['output_lyrics_dir']
     data_output_dir_gen = os.path.join(output_lyrics_dir, f'gen_lyrics_{exp_date}')
     output_dir = data_output_dir_gen
+
+    ## midi input information:
+    midi_pth = "/home/qihao/git/XAI-Lyricist/imagine_midi_test.mid"    ## the path to the input midi file with phrase annotation
+    title = "imagine"    ## the song title
+    sentence_number = len(miditoolkit.MidiFile(midi_pth).markers)    ## number of sentences (phrases) in the melody
+    keywords = ["imagine", "heaven", "easy", "greed", "hunger", "people", "world", "dreamer", "only", "join", "peace", "one", "sky", "imagine", "living", "life"]    ## one keyword for each sentence
+    assert sentence_number == len(keywords)
     
-    # out_lines = []
-    
+    ## convert input MIDI to words (tokens)
+    src_words, tgt_words = mid2words(midi_pth, title, keywords, event2word_dict, lyric2word_dict)
+
+    # convert words (tokens) to to long tensors
+    data = {}
+    for k in src_KEYS:
+        data[f'src_{k}'] = torch.LongTensor([[word[k] for word in src_words]])
+    for k in tgt_KEYS:
+        data[f'tgt_{k}'] = torch.LongTensor([[word[k] for word in tgt_words]])
+    enc_inputs = {k: data[f'src_{k}'].to(device) for k in src_KEYS}  ## all conditional words
+    dec_inputs = {k: data[f'tgt_{k}'].to(device) for k in tgt_KEYS}  ## only a <bos>
+
+    encoded_cond_str = list(enc_inputs['meter'][0].cpu().detach().numpy())
+    cond_inputs_str = src_tknzr.decode(encoded_cond_str)
+    print("cond_inputs_str", cond_inputs_str)
+
+    decoded_output, ppl = model.infer(tgt_tknzr=tgt_tknzr, 
+                                      enc_inputs=enc_inputs, 
+                                      dec_inputs_gt=dec_inputs,
+                                      sentence_maxlen=inference_max_tokens, 
+                                      temperature=temperature, 
+                                      topk=topk,
+                                      device=device,
+                                      num_syllables=30)
+
+    decoded_lyrics = decoded_output.replace('<s>', '').replace('</s>', '').strip()
+
+    ## print the lyrics line by line
+    print(f"TITLE: {title.upper()}\n")
+    for sentence in decoded_lyrics.split('.'):
+        if len(sentence.strip()) == 0:
+            continue ## skip the blank lines
+        print(sentence.strip().capitalize())
+
+    """
     for data_idx, data in enumerate(test_dataloader):
         bleu_scores = []
         ppl_scores = []
@@ -105,9 +253,12 @@ if __name__ == '__main__':
                 break
 
             data_name = data_idx
+            print(data['src_meter'].shape)
 
             enc_inputs = {k: data[f'src_{k}'].to(device) for k in src_KEYS}
             dec_inputs = {k: data[f'tgt_{k}'].to(device) for k in tgt_KEYS}
+
+            # print(enc_inputs)
             
             encoded_cond_str = list(enc_inputs['meter'][0].cpu().detach().numpy())
             cond_inputs_str = src_tknzr.decode(encoded_cond_str)
@@ -120,8 +271,8 @@ if __name__ == '__main__':
             except Exception as e:
                 cond_title = f"{data_idx}"
             
-            dec_inputs_selected = {'word': dec_inputs['word'][:, :2],
-                                  'remainder': dec_inputs['remainder'][:, :2]}
+            dec_inputs_selected = {'word': dec_inputs['word'][:, :1],
+                                  'remainder': dec_inputs['remainder'][:, :1}
             
             decoded_output, ppl = model.infer(tgt_tknzr=tgt_tknzr, 
                                               enc_inputs=enc_inputs, 
@@ -256,3 +407,5 @@ if __name__ == '__main__':
         except Exception as e:
             traceback.print_exc()
             print(f"-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-!-\nBad Item: {data_name}")
+
+    """

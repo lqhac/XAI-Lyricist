@@ -1,0 +1,130 @@
+
+>> Matched Line Number 
+
+Line_0: 
+Skeleton_I:	<s> <title> Imagine <syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Lyric_GT:	imagine there's no heaven
+Lyric_Gen:	i'm standing on some grass in
+GT:	[ɪ]	['mæ]	[ʤən]	[ðɛrz]	['noʊ]	['hɛ]	[vən]	
+GE:	[aɪm]	['stæn]	[dɪŋ]	[ɑn]	['səm]	['græs]	[ɪn]
+
+Line_1: 
+Skeleton_I:	<syllable_6> <template> <weak> <strong> <weak> <weak> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <weak> <strong> <weak> <weak> <weak> <strong>
+Lyric_GT:	it's easy if you try
+Lyric_Gen:	a water in your hand
+GT:	[ɪts]	['iː]	[ziː]	[ɪf]	[juː]	['traɪ]	
+GE:	[eɪ]	['wɔː]	[tɛː]	[ɪn]	[jɔːr]	['hænd]
+
+Line_2: 
+Skeleton_I:	<syllable_5> <template> <strong> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_5> <template> <strong> <strong> <weak> <strong> <weak>
+Lyric_GT:	no hell below us
+Lyric_Gen:	i hear the voices
+GT:	['noʊ]	['hɛl]	[bɪ]	['loʊ]	[əs]	
+GE:	['aɪ]	['hɪr]	[ðə]	['vɔɪ]	[səz]
+
+Line_3: 
+Skeleton_I:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	above us only sky
+Lyric_Gen:	a little closer now
+GT:	[ə]	['bʌv]	[əs]	['oʊn]	[liː]	['skaɪ]	
+GE:	[eɪ]	['lɪ]	[təl]	['kloʊ]	[sɛː]	['naʊ]
+
+Line_4: 
+Skeleton_I:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Lyric_GT:	imagine all the people
+Lyric_Gen:	and i can feel the music
+GT:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[ðə]	['piː]	[pəl]	
+GE:	[ænd]	['aɪ]	[kæn]	['fiːl]	[ðə]	['mjuː]	[zɪk]
+
+Line_5: 
+Skeleton_I:	<syllable_7> <template> <strong> <weak> <weak> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_7> <template> <strong> <weak> <weak> <weak> <strong> <weak> <strong>
+Lyric_GT:	living for today you oh
+Lyric_Gen:	listen to the river flow
+GT:	['lɪ]	[vɪŋ]	[fɔːr]	[tʌ]	['deɪ]	[juː]	['oʊ]	
+GE:	['lɪ]	[sən]	[tuː]	[ðə]	['rɪ]	[vɛː]	['floʊ]
+
+Line_6: 
+Skeleton_I:	<syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <weak> <strong> <strong> <weak>
+Lyric_GT:	imagine there's no countries
+Lyric_Gen:	i'm standing on some grass for
+GT:	[ɪ]	['mæ]	[ʤən]	[ðɛrz]	['noʊ]	['kən]	[triːz]	
+GE:	[aɪm]	['stæn]	[dɪŋ]	[ɑn]	['səm]	['græs]	[fɔːr]
+
+Line_7: 
+Skeleton_I:	<syllable_6> <template> <strong> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <strong> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	it isn't hard to do
+Lyric_Gen:	i hear the river breeze
+GT:	['ɪt]	['ɪ]	[zənt]	['hɑrd]	[tuː]	['duː]	
+GE:	['aɪ]	['hɪr]	[ðə]	['rɪ]	[vɛː]	['briːz]
+
+Line_8: 
+Skeleton_I:	<syllable_7> <template> <strong> <weak> <weak> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_8> <template> <strong> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Lyric_GT:	nothing to kill or die for
+Lyric_Gen:	listen to what you say to me
+GT:	['nʌ]	[θɪŋ]	[tuː]	['kɪl]	[ɔːr]	['daɪ]	[fɔːr]	
+GE:	['lɪ]	[sən]	[tuː]	['wʌt]	[juː]	['seɪ]	[tuː]	[miː]
+
+Line_9: 
+Skeleton_I:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_6> <template> <weak> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	and no religion too
+Lyric_Gen:	i'm standing at the shore
+GT:	[ænd]	['noʊ]	[rɪ]	['lɪ]	[ʤən]	['tuː]	
+GE:	[aɪm]	['stæn]	[dɪŋ]	['æt]	[ðə]	['ʃɔːr]
+
+Line_10: 
+Skeleton_I:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <strong> <weak> <strong> <weak> <strong> <weak>
+Lyric_GT:	imagine all the people
+Lyric_Gen:	and i can feel the music
+GT:	[ɪ]	['mæ]	[ʤən]	['ɔːl]	[ðə]	['piː]	[pəl]	
+GE:	[ænd]	['aɪ]	[kæn]	['fiːl]	[ðə]	['mjuː]	[zɪk]
+
+Line_11: 
+Skeleton_I:	<syllable_7> <template> <strong> <weak> <strong> <weak> <strong> <weak> <strong>
+Skeleton_O:	<syllable_7> <template> <strong> <weak> <strong> <weak> <strong> <weak> <strong>
+Lyric_GT:	living life in peace you oh
+Lyric_Gen:	i can taste the water flow
+GT:	['lɪ]	[vɪŋ]	['laɪf]	[ɪn]	['piːs]	[juː]	['oʊ]	
+GE:	['aɪ]	[kæn]	['teɪst]	[ðə]	['wɔː]	[tɛː]	['floʊ]
+
+Line_12: 
+Skeleton_I:	<syllable_7> <template> <weak> <weak> <strong> <weak> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <weak> <strong> <weak> <weak> <strong> <weak>
+Lyric_GT:	you may say i'm a dreamer
+Lyric_Gen:	to the wind and the water
+GT:	[juː]	[meɪ]	['seɪ]	[aɪm]	[eɪ]	['driː]	[mɛː]	
+GE:	[tuː]	[ðə]	['waɪnd]	[ænd]	[ðə]	['wɔː]	[tɛː]
+
+Line_13: 
+Skeleton_I:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Lyric_GT:	but i'm not the only one
+Lyric_Gen:	in a little river down
+GT:	[bət]	[aɪm]	['nɑt]	[ðə]	['oʊn]	[liː]	[wʌn]	
+GE:	[ɪn]	[eɪ]	['lɪ]	[təl]	['rɪ]	[vɛː]	[daʊn]
+
+Line_14: 
+Skeleton_I:	<syllable_7> <template> <strong> <strong> <strong> <substrong> <weak> <strong> <weak>
+Skeleton_O:	<syllable_7> <template> <strong> <strong> <strong> <substrong> <weak> <strong> <weak>
+Lyric_GT:	i hope someday you'll join us
+Lyric_Gen:	when i look underneath them
+GT:	['aɪ]	['hoʊp]	['səm]	[`deɪ]	[juːl]	['ʤɔɪn]	[əs]	
+GE:	['wɛn]	['aɪ]	['lʊk]	[`ən]	[dɛː]	['niːθ]	[ðɛm]
+
+Line_15: 
+Skeleton_I:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Skeleton_O:	<syllable_7> <template> <weak> <weak> <strong> <weak> <strong> <weak> <weak>
+Lyric_GT:	and the world will be as one
+Lyric_Gen:	in a sea of people down
+GT:	[ænd]	[ðə]	['wɛːld]	[wɪl]	['biː]	[æz]	[wʌn]	
+GE:	[ɪn]	[eɪ]	['siː]	[ʌv]	['piː]	[pəl]	[daʊn]
